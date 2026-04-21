@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'Bravura Text';
+  src: url('https://cdn.jsdelivr.net/gh/steinbergmedia/bravura/redist/woff/BravuraText.woff2')
+      format('woff2'),
+    url('https://cdn.jsdelivr.net/gh/steinbergmedia/bravura/redist/woff/BravuraText.woff')
+      format('woff');
+  font-display: swap;
+}
+
+main {
+  height: 100vh;
+  height: 100dvh;
+  padding: 1rem;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.accidental {
+  font-family: 'Bravura Text', system-ui, sans-serif;
+}
+
+.options-toggle {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #888;
+  border-radius: 0.3rem;
+  background: #fff;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: #000;
+}
+
+@media (prefers-color-scheme: dark) {
+  .options-toggle {
+    background: #222;
+    color: #ddd;
+    border-color: #555;
+  }
+}
+
+.options-dialog {
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: min(90vw, 32rem);
+  background: canvas;
+  color: canvastext;
+}
+
+.options-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.close-btn {
+  align-self: flex-end;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid currentColor;
+  border-radius: 0.3rem;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+.grid-wrapper {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1rem;
+}
+
+.input-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+}
+
+.input-grid input[type='number'] {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+.toggle-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.toggle-list label.toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+
+.grid {
+  display: block;
+  color: #333;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.hex {
+  cursor: pointer;
+}
+
+.hex text {
+  pointer-events: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .grid {
+    color: #ddd;
+  }
+}
