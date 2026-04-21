@@ -115,6 +115,15 @@ const KITE_31_MAP: Record<number, StepMix> = {
 
 const KITE_BACKDROP_RGB: [number, number, number] = [136, 136, 136];
 
+type Tuning = { name: string; ne: number; se: number };
+
+const TUNINGS: Record<string, Tuning> = {
+  diatonic: { name: "Diatonic", ne: 2, se: 3 },
+  myna: { name: "Myna", ne: 1, se: 7 },
+  orwell: { name: "Orwell", ne: 4, se: 3 },
+  exquis: { name: "Exquis", ne: 2, se: 5 },
+};
+
 const cellStyle = (step: number): { fill: string; text: string } => {
   const mix = KITE_31_MAP[step];
   if (!mix) return { fill: "transparent", text: "currentColor" };
@@ -154,6 +163,7 @@ function App() {
   const [startLarge, setStartLarge] = useState(true);
   const [showNoteNames, setShowNoteNames] = useState(true);
   const [kiteColors, setKiteColors] = useState(true);
+  const [tuning, setTuning] = useState<string>("diatonic");
 
   const audioCtxRef = useRef<AudioContext | null>(null);
   const activeNotesRef = useRef<
@@ -278,7 +288,11 @@ function App() {
   const hexes = rawHexes.map((h) => {
     const dq = h.q - shiftedOriginQ;
     const dr = h.r - shiftedOriginR;
-    const rawSteps = orientation === "pointy" ? 5 * dq + 3 * dr : 2 * dq - dr;
+    const t = TUNINGS[tuning] ?? TUNINGS.diatonic;
+    const rawSteps =
+      orientation === "pointy"
+        ? (t.ne + t.se) * dq + t.se * dr
+        : t.ne * dq + (t.ne - t.se) * dr;
     return {
       cx: h.cx,
       cy: h.cy,
@@ -378,6 +392,19 @@ function App() {
                   setScale(Math.max(0.1, Number(e.target.value) || 1))
                 }
               />
+            </label>
+            <label>
+              Tuning
+              <select
+                value={tuning}
+                onChange={(e) => setTuning(e.target.value)}
+              >
+                {Object.entries(TUNINGS).map(([key, t]) => (
+                  <option key={key} value={key}>
+                    {t.name}
+                  </option>
+                ))}
+              </select>
             </label>
           </div>
           <div className="toggle-list">
